@@ -1,5 +1,4 @@
 public class Ronda {
-    // TODO tira la ronda (ej: 4), los partidos de esa ronda (ej: Real vs Barca y Boca vs River) y va anotando los puntos acertados del pronostico?
     //propiedades
     private String numeroRonda;
     private Partido[] partidos;
@@ -29,5 +28,22 @@ public class Ronda {
 
     public void setPartidos(Partido[] partidos) {
         this.partidos = partidos;
+    }
+
+    //metodo
+    // AGREGAR PARTIDOS
+
+    public int puntos(Pronostico[] pronosticosJugador){
+        int aciertos = 0;
+        //Itero sobre los pronosticos para sacar el puntaje individual de cada uno
+        for(Pronostico pronosticoActual : pronosticosJugador){
+            //Itero sobre los partidos para ver si en algun partido hubo un acierto en el pronostico actual
+            for (Partido partidoActual : this.partidos){
+                if(pronosticoActual.getPartido() == partidoActual && pronosticoActual.getResultado() == partidoActual.resultado()){
+                    aciertos++;
+                }
+            }
+        }
+        return aciertos;
     }
 }

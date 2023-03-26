@@ -1,5 +1,4 @@
 public class Partido {
-    // TODO especifica el partido dado entre 2 equipos, especificando los goles de cada uno y genera el resultado en base a sus goles?
     //propiedades
     private Equipo equipo1;
     private Equipo equipo2;
@@ -53,9 +52,15 @@ public class Partido {
     }
 
     //metodos
-    /* TODO debatir.
-    public static ResultadoEnum resultado(Equipo){
-        return ResultadoEnum;
+    public ResultadoEnum resultado() {
+        // EVALUA EL RESULTADO DEL PARTIDO SEGUN LOS GOLES
+        if (this.golesEquipo1 > this.golesEquipo2){
+            return ResultadoEnum.GANA_EQUIPO1;
+        } else if (this.golesEquipo2 > this.golesEquipo1) {
+            return ResultadoEnum.GANA_EQUIPO2;
+        }
+        else{
+            return ResultadoEnum.EMPATE;
+        }
     }
-     */
 }
