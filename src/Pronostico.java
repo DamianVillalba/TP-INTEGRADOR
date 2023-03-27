@@ -4,7 +4,7 @@ public class Pronostico {
     private ResultadoEnum resultado;
 
     //constructores
-    public Pronostico(Equipo equipo1, Equipo equipo2, int i, int i1){
+    public Pronostico(){
 
     }
     public Pronostico(Partido partido, ResultadoEnum resultado){

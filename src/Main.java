@@ -7,24 +7,38 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException{
         //armado de instancias
-        List<String> datosPartido1 = infoArchivo(args[1], 1);
-        List<String> datosPartido2 = infoArchivo(args[1], 2);
-        Equipo equipo1 = new Equipo(datosPartido1.get(0));
-        Equipo equipo2 = new Equipo(datosPartido1.get(3));
-        Equipo equipo3 = new Equipo(datosPartido2.get(0));
-        Equipo equipo4 = new Equipo(datosPartido2.get(3));
-        int golesEquipo1 = Integer.parseInt(datosPartido1.get(1));
-        int golesEquipo2 = Integer.parseInt(datosPartido1.get(2));
-        int golesEquipo3 = Integer.parseInt(datosPartido2.get(1));
-        int golesEquipo4 = Integer.parseInt(datosPartido2.get(2));
-        Partido partido1 = new Partido(equipo1, equipo2, golesEquipo1, golesEquipo2);
-        Partido partido2 = new Partido(equipo3, equipo4, golesEquipo3, golesEquipo4);
-        Pronostico pronostico1 = new Pronostico(partido1, resultadoPronostico(infoArchivo(args[0], 1)));
-        Pronostico pronostico2 = new Pronostico(partido2, resultadoPronostico(infoArchivo(args[0], 2)));
-        Pronostico[] pronosticos = new Pronostico[]{pronostico1, pronostico2};
-        Partido[] partidos = new Partido[]{partido1, partido2};
+        List<Pronostico> pronosticos = new ArrayList<>();
+        Equipo equipo1 = new Equipo();
+        Equipo equipo2 = new Equipo();
+        Partido partido = new Partido();
+        Pronostico pronostico = new Pronostico();
+        List<Partido> partidos = new ArrayList<>();
+        for(int indice = 1; indice <= cantidadPartidos(args[0]); indice++){
+            List<String> datosPartido = infoArchivo(args[1], indice);
+            equipo1.setNombre(datosPartido.get(0));
+            equipo2.setNombre(datosPartido.get(3));
+            int golesEquipo1 = Integer.parseInt(datosPartido.get(1));
+            int golesEquipo2 = Integer.parseInt(datosPartido.get(2));
+            partido.setEquipo1(equipo1);
+            partido.setEquipo2(equipo2);
+            partido.setGolesEquipo1(golesEquipo1);
+            partido.setGolesEquipo2(golesEquipo2);
+            pronostico.setPartido(partido);
+            pronostico.setResultado(resultadoPronostico(infoArchivo(args[0], indice)));
+            pronosticos.add(pronostico);
+            System.out.println(pronostico.getPartido().getEquipo1().getNombre()); //SALE ARGENTINA PRIMERO Y SEGUNDO POLONIA
+            partidos.add(partido);
+        }
         Ronda ronda1 = new Ronda("1", partidos);
         //resultado
+        System.out.println("--------------");
+        System.out.println(pronosticos.get(0).getPartido().getEquipo1().getNombre()); //SALE SOLO POLONIA A PESAR DE QUE SALE ARGENTINA EN LA PRIMERA VUELTA
+        System.out.println("--------------");
+        for(Pronostico pronostico1 : pronosticos){
+            System.out.println(pronostico1.getPartido().getEquipo1().getNombre());
+            System.out.println(pronostico1.getResultado());
+        }
+
         System.out.println("Puntaje del pronostico: " + ronda1.puntos(pronosticos));
     }
 
@@ -54,5 +68,13 @@ public class Main {
         else {
             return ResultadoEnum.EMPATE;
         }
+    }
+
+    private static int cantidadPartidos(String archivo) throws IOException{
+        int partidos = 0;
+        for(String linea : Files.readAllLines(Paths.get(archivo))){
+            partidos++;
+        }
+        return partidos;
     }
 }

@@ -1,19 +1,21 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ronda {
     //propiedades
     private String numeroRonda;
-    private Partido[] partidos;
+    private List<Partido> partidos;
 
     //constructores
     public Ronda(){
-
+        this.partidos =new ArrayList<>();
     }
-    public Ronda(String numeroRonda, Partido[] partidos){
+    public Ronda(String numeroRonda, List<Partido> partidos){
         this.numeroRonda = numeroRonda;
         this.partidos = partidos;
     }
 
     //get y set
-
     public String getNumeroRonda() {
         return numeroRonda;
     }
@@ -22,24 +24,25 @@ public class Ronda {
         this.numeroRonda = numeroRonda;
     }
 
-    public Partido[] getPartidos() {
+    public List<Partido> getPartidos() {
         return partidos;
     }
 
-    public void setPartidos(Partido[] partidos) {
+    public void setPartidos(List<Partido> partidos) {
         this.partidos = partidos;
     }
 
     //metodo
-    // AGREGAR PARTIDOS
-
-    public int puntos(Pronostico[] pronosticosJugador){
+    public int puntos(List<Pronostico> pronosticosJugador){
+        //System.out.println(pronosticosJugador);
         int aciertos = 0;
         //Itero sobre los pronosticos para sacar el puntaje individual de cada uno
         for(Pronostico pronosticoActual : pronosticosJugador){
+            //System.out.println("Pronostico actual: " + pronosticoActual);
             //Itero sobre los partidos para ver si en algun partido hubo un acierto en el pronostico actual
             for (Partido partidoActual : this.partidos){
                 if(pronosticoActual.getPartido() == partidoActual && pronosticoActual.getResultado() == partidoActual.resultado()){
+                   // System.out.println(partidoActual.getEquipo1().getNombre());
                     aciertos++;
                 }
             }
